@@ -36,7 +36,7 @@ workers:
   extraVolumes:
     - name: plugins-volume
       persistentVolumeClaim:
-        claimName: airflow-plugins-pvc
+        claimName: plugins-pvc
   waitForMigrations:
     enabled: false
 
@@ -47,7 +47,7 @@ dagProcessor:
   extraVolumes:
     - name: plugins-volume
       persistentVolumeClaim:
-        claimName: airflow-plugins-pvc
+        claimName: plugins-pvc
   waitForMigrations:
     enabled: false
 
@@ -58,7 +58,7 @@ scheduler:
   extraVolumes:
     - name: plugins-volume
       persistentVolumeClaim:
-        claimName: airflow-plugins-pvc
+        claimName: plugins-pvc
   waitForMigrations:
     enabled: false
 triggerer:
@@ -72,7 +72,7 @@ triggerer:
   extraVolumes:
     - name: plugins-volume
       persistentVolumeClaim:
-        claimName: airflow-plugins-pvc
+        claimName: plugins-pvc
   waitForMigrations:
     enabled: false
 
@@ -92,7 +92,7 @@ extraSecrets:
 dags:
   persistence:
     enabled: true
-    existingClaim: local-pvc
+    existingClaim: dags-pvc
   gitSync:
     enabled: false
     repo: https://gitlab-presight.g42.ae/analytics/app/zeus/data-migration.git
