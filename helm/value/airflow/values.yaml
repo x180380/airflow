@@ -109,5 +109,3 @@ opensearch:
     pass: admin
     host: opensearch-masters
     port: 9200
-    use_ssl: true
-    verify_certs: false
