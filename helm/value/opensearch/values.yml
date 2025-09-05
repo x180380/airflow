@@ -10,6 +10,9 @@ extraEnvs:
     value: Huawei@77700772$
 securityConfig:
   enabled: false
+plugins:
+  security:
+    enabled: false
 persistence:
   enabled: false
 
