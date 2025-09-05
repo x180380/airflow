@@ -8,8 +8,7 @@ config:
 extraEnvs:
   - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
     value: Huawei@77700772$
-  - name: DISABLE_INSTALL_DEMO_CONFIG
-    value: "true"
+
 persistence:
   enabled: false
 
