@@ -103,3 +103,9 @@ dags:
 opensearch:
   # Enable opensearch task logging
   enabled: false
+  connection:
+    scheme: https
+    user: admin
+    pass: admin
+    host: opensearch-masters
+    port: 9200
