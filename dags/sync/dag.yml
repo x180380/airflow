@@ -11,7 +11,7 @@ sync:
   tasks:
     receive_message:
       operator: ai.presight.sensors.kafka.AwaitMessageSensor
-      kafka_config_id: "test"
+      kafka_config_id: "kafka"
       task_id: "awaiting_message"
       topics: ["demo"]
       xcom_push_key: "retrieved_message"
