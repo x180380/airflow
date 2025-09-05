@@ -1,0 +1,12 @@
+replicas: 1
+config:
+  opensearch.yml: |-
+    cluster.name: opensearch-cluster
+    network.host: 0.0.0.0
+    bootstrap.system_call_filter: false
+
+extraEnvs:
+  - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+    value: Huawei@77700772$
+persistence:
+  enabled: false

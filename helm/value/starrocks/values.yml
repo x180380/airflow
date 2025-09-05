@@ -1,0 +1,16 @@
+starrocks:
+  starrocksFESpec:
+    resources:
+      requests:
+        cpu: 1
+        memory: 2Gi
+  starrocksBeSpec:
+    resources:
+      requests:
+        cpu: 1
+        memory: 2Gi
+  starrocksCnSpec:
+    resources:
+      requests:
+        cpu: 1
+        memory: 2Gi
