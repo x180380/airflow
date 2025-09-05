@@ -1,18 +1,50 @@
-replicas: 1
-config:
-  opensearch.yml: |-
-    cluster.name: opensearch-cluster
-    network.host: 0.0.0.0
-    bootstrap.system_call_filter: false
-
-extraEnvs:
-  - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-    value: Huawei@77700772$
-securityConfig:
-  enabled: false
-plugins:
+#Minimal configuration of a cluster with version 2.X of the operator.
+#Note the replacement of 'master' role with 'cluster_manager' on line 49
+apiVersion: opensearch.opster.io/v1
+kind: OpenSearchCluster
+metadata:
+  name: opensearch
+spec:
   security:
-    enabled: false
-persistence:
-  enabled: false
-
+    config:
+    tls:
+       http:
+         generate: true 
+       transport:
+         generate: true
+         perNode: true
+  general:
+    httpPort: 9200
+    serviceName: opensearch
+    version: 2.14.0
+    pluginsList: ["repository-s3"]
+    drainDataNodes: true
+  dashboards:
+    tls:
+      enable: true
+      generate: true
+    version: 2.14.0
+    enable: true
+    replicas: 1
+    resources:
+      requests:
+         memory: "512Mi"
+         cpu: "200m"
+      limits:
+         memory: "512Mi"
+         cpu: "200m"
+  nodePools:
+    - component: masters
+      replicas: 3
+      resources:
+         requests:
+            memory: "4Gi"
+            cpu: "1000m"
+         limits:
+            memory: "4Gi"
+            cpu: "1000m"
+      roles:
+        - "data"
+        - "cluster_manager"
+      persistence:
+         emptyDir: {}
