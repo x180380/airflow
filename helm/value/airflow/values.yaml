@@ -102,4 +102,4 @@ dags:
     credentialsSecret: git-credentials
 opensearch:
   # Enable opensearch task logging
-  enabled: true
+  enabled: false
