@@ -11,5 +11,3 @@ extraEnvs:
 persistence:
   enabled: false
 
-securityConfig:
-  enabled: false
