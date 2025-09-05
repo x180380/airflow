@@ -1,0 +1,45 @@
+image:
+  repository: x180380/kyuubi
+  pullPolicy: IfNotPresent
+  tag: master
+
+replicaCount: 1
+sparkConf:
+  files:
+    'spark-defaults.conf': |
+        spark.submit.deployMode=cluster
+        spark.kubernetes.namespace=default
+        spark.kubernetes.container.image=x180380/spark:3.4.3
+        spark.kubernetes.authenticate.driver.serviceAccountName=spark
+        spark.kubernetes.file.upload.path=s3a://poc-obs-lixinlong/spark/uploads
+        spark.hadoop.fs.s3a.endpoint=https://obs.ae-ad-1.vb.g42cloud.com
+        spark.hadoop.fs.s3a.access.key=HGMO3AFFUJCEESUQKDSN
+        spark.hadoop.fs.s3a.secret.key=YHOvX42IlwL5OB5UVHRlrW0ZEpWGh1KikSx6azDF
+        spark.hadoop.fs.s3a.path.style.access=true
+        spark.hadoop.fs.s3a.aws.region=us-east-1
+        spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
+        spark.hadoop.fs.s3a.connection.ssl.enabled=true
+        spark.kubernetes.driver.pod.name=spark-driver
+        spark.kubernetes.executor.podNamePrefix=spark-sql
+        spark.executor.instances=1
+        spark.executor.memory=512m
+        spark.driver.memory=512m
+        spark.executor.cores=1
+        spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions
+        spark.sql.catalog.nessie=org.apache.iceberg.spark.SparkCatalog
+        spark.sql.catalog.nessie.type=nessie
+        spark.sql.catalog.nessie.uri=http://nessie:19120/api/v1
+        spark.sql.catalog.nessie.ref=main
+        spark.sql.catalog.nessie.warehouse=s3a://poc-obs-lixinlong/catalogs/nessie/
+        spark.sql.catalog.nessie.io-impl=org.apache.iceberg.aws.s3.S3FileIO
+        spark.sql.catalog.nessie.s3.endpoint=https://obs.ae-ad-1.vb.g42cloud.com
+        spark.sql.catalog.nessie.s3.access-key-id=HGMO3AFFUJCEESUQKDSN
+        spark.sql.catalog.nessie.s3.secret-access-key=YHOvX42IlwL5OB5UVHRlrW0ZEpWGh1KikSx6azDF
+        spark.sql.catalog.nessie.s3.path-style-access=true
+        spark.sql.defaultCatalog=nessie
+        spark.sql.catalogImplementation=in-memory
+        spark.kubernetes.driverEnv.AWS_REGION=us-east-1
+        spark.kubernetes.driverEnv.AWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT=true
+        spark.executorEnv.AWS_REGION=us-east-1
+        spark.driver.extraJavaOptions="--add-exports java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED  -Djava.home=/opt/bitnami/java -Daws.region=us-east-1 -DAWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT=true  -Daws.accessKeyId=HGMO3AFFUJCEESUQKDSN -Daws.secretAccessKey=YHOvX42IlwL5OB5UVHRlrW0ZEpWGh1KikSx6azDF "
+        spark.executor.extraJavaOptions="--add-exports java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED  -Djava.home=/opt/bitnami/java -Daws.region=us-east-1 -DAWS_JAVA_V1_DISABLE_DEPRECATION_ANNOUNCEMENT=true -Daws.accessKeyId=HGMO3AFFUJCEESUQKDSN -Daws.secretAccessKey=YHOvX42IlwL5OB5UVHRlrW0ZEpWGh1KikSx6azDF "

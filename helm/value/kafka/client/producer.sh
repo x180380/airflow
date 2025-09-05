@@ -1,0 +1,1 @@
+kafka-console-producer.sh --producer.config /tmp/client/client.properties --topic demo --bootstrap-server kafka-controller-headless:9094

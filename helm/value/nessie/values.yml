@@ -1,0 +1,29 @@
+image:
+  repository: ghcr.io/projectnessie/nessie
+  tag: "0.104.3"
+versionStoreType: JDBC2
+
+jdbc:
+  jdbcUrl: jdbc:postgresql://postgres-postgresql:5432/nessie
+  secret:
+    name: nessie-credentials
+    username: username
+    password: password
+catalog:
+  enabled: true
+  iceberg:
+    defaultWarehouse: nessie
+    warehouses:
+    - name: nessie
+      location: s3://poc-obs-lixinlong/catalogs/nessie/
+  storage:
+    s3:
+      defaultOptions:
+        region: us-east-1
+        endpoint: https://obs.ae-ad-1.vb.g42cloud.com
+        pathStyleAccess: true
+        authType: STATIC
+        accessKeySecret:
+          name: nessie-credentials
+          awsAccessKeyId: awsAccessKeyId
+          awsSecretAccessKey: awsSecretAccessKey

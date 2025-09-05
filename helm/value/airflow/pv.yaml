@@ -1,0 +1,31 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: "/Users/li.xinlong1/Project/zeus/airflow-plugins/dags"
+
+---
+
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: airflow-plugins-pvc
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: airflow-plugins
+  hostPath:
+    path: "/Users/li.xinlong1/Project/zeus/airflow-plugins/plugins"

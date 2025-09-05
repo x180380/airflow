@@ -1,0 +1,46 @@
+default:
+  default_args:
+    catchup: false
+    start_date: 2025-08-27
+
+sync:
+  params:
+    arrival_date: "2025-08-27"
+  schedule: "0 3 * * *"
+  render_template_as_native_obj: True
+  tasks:
+    receive_message:
+      operator: ai.presight.sensors.kafka.AwaitMessageSensor
+      kafka_config_id: "test"
+      task_id: "awaiting_message"
+      topics: ["demo"]
+      xcom_push_key: "retrieved_message"
+
+    process_message:
+      operator: airflow.providers.standard.operators.python.PythonOperator
+      python_callable: sync.functions.process_message
+      dependencies: [receive_message]
+
+    export_data:
+      operator: airflow.providers.common.sql.operators.sql.SQLExecuteQueryOperator
+      conn_id: "jdbc"
+      sql: "INSERT INTO demo SELECT dag_id, owners FROM {{ ti.xcom_pull(task_ids='process_message', key='json_data').table }}"
+      autocommit: True
+      dependencies: [process_message]
+
+    copy_files:
+      operator: ai.presight.operators.s3.S3CopyFolderOperator
+      source_conn_id: "obs"
+      dest_conn_id: "obs"
+      source_prefix: "catalogs/nessie/default"
+      dest_prefix: "dest_folder"
+      source_bucket_name: "poc-obs-lixinlong"
+      dest_bucket_name: "poc-obs-lixinlong"
+      file_suffix: ".parquet"
+      dependencies: [export_data]
+
+    add_files:
+      operator: ai.presight.operators.kyuubi.KyuubiOperator
+      hive_cli_conn_id: "kyuubi"
+      hql: "sync/iceberg.hql"
+      dependencies: [copy_files]

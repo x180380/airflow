@@ -1,0 +1,10 @@
+storageClass:
+  name: csi-s3
+
+secret:
+  name: csi-s3-secret
+  accessKey: "HGMO3AFFUJCEESUQKDSN"
+  secretKey: "YHOvX42IlwL5OB5UVHRlrW0ZEpWGh1KikSx6azDF"
+  endpoint: https://obs.ae-ad-1.vb.g42cloud.com
+images:
+  csi: x180380/csi-s3:1.0

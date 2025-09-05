@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nessie-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: nessie.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: nessie
+            port:
+              number: 19120
+        path: /
+        pathType: Prefix

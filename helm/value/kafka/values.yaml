@@ -1,0 +1,21 @@
+controller:
+  replicaCount: 3
+  persistence:
+    enabled: false
+sasl:
+  client:
+    users:
+      - user1
+      - user2
+    passwords: 
+      - user123
+      - user234
+
+extraVolumeMounts:
+  - name: plugins-volume
+    mountPath: /tmp/client
+
+extraVolumes:
+  - name: plugins-volume
+    persistentVolumeClaim:
+      claimName: kafka-pvc

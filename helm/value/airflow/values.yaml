@@ -1,0 +1,105 @@
+
+env:
+  - name: "JAVA_HOME"
+    value: "/usr/lib/jvm/java-17-openjdk-arm64"
+
+fernetKey: BAtjQOXVfEfiKutMawRHKq-VQoI1TuZGZic6sptQdMQ=
+
+images:
+  airflow:
+    repository: x180380/airflow
+    tag: 3.0.6
+
+ingress:
+  web:
+    enabled: false
+    ingressClassName: "nginx"
+
+data:
+  metadataConnection:
+    user: airflow
+    pass: airflow123
+    host: postgres-postgresql
+    db: airflow
+
+apiServer:
+  waitForMigrations:
+    enabled: false
+workers:
+  # Persistence volume configuration for Airflow Celery workers
+  persistence:
+    # Enable persistent volumes
+    enabled: false
+  extraVolumeMounts:
+    - name: plugins-volume
+      mountPath: /opt/airflow/plugins
+  extraVolumes:
+    - name: plugins-volume
+      persistentVolumeClaim:
+        claimName: airflow-plugins-pvc
+  waitForMigrations:
+    enabled: false
+
+dagProcessor:
+  extraVolumeMounts:
+    - name: plugins-volume
+      mountPath: /opt/airflow/plugins
+  extraVolumes:
+    - name: plugins-volume
+      persistentVolumeClaim:
+        claimName: airflow-plugins-pvc
+  waitForMigrations:
+    enabled: false
+
+scheduler:
+  extraVolumeMounts:
+    - name: plugins-volume
+      mountPath: /opt/airflow/plugins
+  extraVolumes:
+    - name: plugins-volume
+      persistentVolumeClaim:
+        claimName: airflow-plugins-pvc
+  waitForMigrations:
+    enabled: false
+triggerer:
+  persistence:
+    # Enable persistent volumes
+    enabled: false
+  extraVolumeMounts:
+    - name: plugins-volume
+      mountPath: /opt/airflow/plugins
+
+  extraVolumes:
+    - name: plugins-volume
+      persistentVolumeClaim:
+        claimName: airflow-plugins-pvc
+  waitForMigrations:
+    enabled: false
+
+redis:
+  persistence:
+    # Enable persistent volumes
+    enabled: false
+  
+postgresql:
+  enabled: false
+
+extraSecrets:
+  airflow-ssh-secret:
+    data: |
+      gitSshKey: 'LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUJGd0FBQUFkemMyZ3RjbgpOaEFBQUFBd0VBQVFBQUFRRUFwUnQ5MWF1Rm5DMDNrSk9DQUMyOUpVUG9LbklEQTY1NWZhbWNTZmgwb1dWcVAxSDdIY2ZSCnlqL1NwU3dMajZ1UjQ5dDFrQllHMlJkSTA0WUcxSmRLT3ZhRGFUTFFQckh2Qnd3Q2M3RURLOTJML3FYYW9mQVp2QXErbTMKTElJSEVTaGMyc1FZNnlEMkJYaW9QVUc1NCtReG82aHNrdXREOVQ0blljQ2JJdzFvd1dXRm9IUFVydkRvQW4xYitOYUFKVApkZU1uenFzUi9vYmtTR1paajYwbUdxZFc4eXVoWFJMcVBXRmR5OTlZcEFZZ1NwaXpQcGMwbmdvUk9mcENtUGt2R1hnUVdhCk14YkV0MnR2Mm1URWpRY2tJZXVPUlc2ZTJ3bnFYUzZSR0NhN0JLWktRUkdxTEFhUWZOcWRNVE41WkN1YVpyVVNhU1FUeHcKeUpyNmk1U0FBd0FBQThBL3dwMWpQOEtkWXdBQUFBZHpjMmd0Y25OaEFBQUJBUUNsRzMzVnE0V2NMVGVRazRJQUxiMGxRKwpncWNnTURybmw5cVp4SitIU2haV28vVWZzZHg5SEtQOUtsTEF1UHE1SGoyM1dRRmdiWkYwalRoZ2JVbDBvNjlvTnBNdEErCnNlOEhEQUp6c1FNcjNZditwZHFoOEJtOENyNmJjc2dnY1JLRnpheEJqcklQWUZlS2c5UWJuajVER2pxR3lTNjBQMVBpZGgKd0pzakRXakJaWVdnYzlTdThPZ0NmVnY0MW9BbE4xNHlmT3F4SCtodVJJWmxtUHJTWWFwMWJ6SzZGZEV1bzlZVjNMMzFpawpCaUJLbUxNK2x6U2VDaEU1K2tLWStTOFplQkJab3pGc1MzYTIvYVpNU05CeVFoNjQ1RmJwN2JDZXBkTHBFWUpyc0Vwa3BCCkVhb3NCcEI4MnAweE0zbGtLNXBtdFJKcEpCUEhESW12cUxsSUFEQUFBQUF3RUFBUUFBQVFBU2VMVG5ScjAzNzhjYm9hVVYKcUFoVk52ZXVaL3IyV25xMUdGaW4zZWdPZG00Z2oyZHN1WUk3QWxEcXNiYkphQVIyWFlNVmo2Rk1nRkpoZDhrajE1a3laNApua0p3OHROSEx0Y3VhRFV2WnIzZWxmbithSjMzYkJsdUlrT2Y4eHdmUzBpNElPQTR6Z000TVh1QS91MXhGWUtJTUx1VTVFClZDRnFZSlJhY1ZrTlo0akI0dUhrOUk3ejdkWk11d1F3dzVLcnhNSE1BS1hUQnNMZjFSTlJUWFEvU1lhUXNEandBMmpKUW4KMzhoMCtzdk5IM0lZSloyQlk4d2o4RyttdGEwV2tzSnBNMGJnTk1CbHNUc1JwTHJkcGRHK1BPWVN6dXJibmp3NnlPQ3VhVgo2bmxuMlo4LzZJZ1VOdnFtUExpNEsxdmN5VUxCUUo0VU53NWs4S09MWC9yQkFBQUFnUUNxd3M3M1Q5c2pYWlpLa1JCbnk2ClBwM0daVGdkbUFMWmVhUzJoa3BtbkxBQitOb0oxdHBOazQzRGVkMG0vUWY4Y2M1VXduOWlvYnJIM0doUkFKSWRITUxmK0cKeWZMYXZ2SktIZWIzbHUzVVVaYWZ3Ty9NQjBpSTRVc1NwN29hR3NMbjMwcExtVDJleGtPM2ZLUXk4VmpBK2dHdkVKUE45aAplZElpYjdtSjlPK3dBQUFJRUExRXlmcnNrQk9kVFBreHZ0d1ZDN1VFMVpiOUpWcGJwYWN5cTdEdTV0Nm04S21HaUNSZXZPCmwrWTBYYXBhNU1nK0lBcDlyM1ZjVXVmTE5nbGhtZmw0OHViSHdkVTRDVnhBUXBkMk03OTRQK1o0bmV6K2crQTExRWdjblEKUjRQdU9SZ2FmTXhGaUNIRlBwYUxjaHM0MmFIZkpUQ1BzZUZ2WUFnYmxIQjlUT3Rkc0FBQUNCQU1jWUI5Mk92TzZiKyt1bApQa2hDQmF1ZENTemJKZ09JQjExNUFuaGJIQisyVGVrUHFYQ3ByWmxEN1hzUlJYVkE0UXUwVW94bDJHclVpUVlwczgrdlpVCmZnQkl1VmpmRWF2WEdBdWpjRzM3ZG9nNEFvbVZCUjFKeDE1OEFaSVdsOXY0NzU2RHIzdytmdW10OWpqOEJySW1qdHNZZzgKZnplckpHRXA1Ynp4bGpyNUFBQUFCMkZwY21ac2IzY0JBZ009Ci0tLS0tRU5EIE9QRU5TU0ggUFJJVkFURSBLRVktLS0tLQo='
+
+dags:
+  persistence:
+    enabled: true
+    existingClaim: local-pvc
+  gitSync:
+    enabled: false
+    repo: https://gitlab-presight.g42.ae/analytics/app/zeus/data-migration.git
+    branch: main
+    depth: 1
+    subPath: "dags"
+    credentialsSecret: git-credentials
+opensearch:
+  # Enable opensearch task logging
+  enabled: true

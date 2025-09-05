@@ -1,0 +1,18 @@
+primary:
+  persistence:
+    enabled: false
+  initdb:
+    scripts: 
+      init.sql: |
+        CREATE DATABASE airflow;
+        CREATE USER airflow WITH ENCRYPTED PASSWORD 'airflow123';
+        ALTER DATABASE airflow OWNER TO airflow;
+        CREATE DATABASE nessie;
+        CREATE USER nessie WITH ENCRYPTED PASSWORD 'nessie123';
+        ALTER DATABASE nessie OWNER TO nessie;
+        CREATE DATABASE datasync;
+        CREATE USER datasync WITH ENCRYPTED PASSWORD 'datasync123';
+        ALTER DATABASE datasync OWNER TO datasync;
+        CREATE DATABASE migration;
+        CREATE USER migration WITH ENCRYPTED PASSWORD 'migration123';
+        ALTER DATABASE migration OWNER TO migration;

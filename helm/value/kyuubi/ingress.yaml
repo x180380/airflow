@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kyuubi-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kyuubi.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: kyuubi-rest
+            port:
+              number: 10099
+        path: /
+        pathType: Prefix
