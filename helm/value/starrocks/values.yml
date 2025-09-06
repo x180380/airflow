@@ -14,3 +14,7 @@ starrocks:
       requests:
         cpu: 1
         memory: 2Gi
+  nameOverride: "starrocks"
+  initPassword:
+    enabled: true
+    password: "starrocks123"

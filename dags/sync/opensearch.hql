@@ -1,5 +1,5 @@
 
-CREATE TABLE IF NOT EXISTS es_user_event (
+CREATE TABLE IF NOT EXISTS park_catalog.default.es_user_event (
     id int,
     data STRING
 ) USING org.opensearch.spark.sql
@@ -14,6 +14,4 @@ OPTIONS(
     'opensearch.net.ssl.cert.allow.self.signed' 'true'
 );
 
-INSERT INTO es_user_event 
-SELECT * FROM user_event;
-
+insert into spark_catalog.default.es_user_event select * from nessie.default.user_event;
