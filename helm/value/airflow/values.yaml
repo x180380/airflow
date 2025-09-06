@@ -102,7 +102,7 @@ dags:
     credentialsSecret: git-credentials
 opensearch:
   # Enable opensearch task logging
-  enabled: false
+  enabled: true
   connection:
     scheme: https
     user: admin
