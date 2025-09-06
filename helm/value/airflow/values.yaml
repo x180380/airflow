@@ -4,7 +4,11 @@ env:
     value: "/usr/lib/jvm/java-17-openjdk-arm64"
 
 fernetKey: BAtjQOXVfEfiKutMawRHKq-VQoI1TuZGZic6sptQdMQ=
-
+config:
+  logging:
+    remote_logging: true
+    remote_base_log_folder: s3a://poc-obs-lixinlong/airflow/logs/
+    remote_log_conn_id: obs
 images:
   airflow:
     repository: x180380/airflow
@@ -102,7 +106,7 @@ dags:
     credentialsSecret: git-credentials
 opensearch:
   # Enable opensearch task logging
-  enabled: true
+  enabled: false
   connection:
     scheme: https
     user: admin
