@@ -5,9 +5,9 @@ env:
 
 fernetKey: BAtjQOXVfEfiKutMawRHKq-VQoI1TuZGZic6sptQdMQ=
 config:
-  core:
+  loggine:
     remote_logging: true
-    remote_base_log_folder: s3a://poc-obs-lixinlong/airflow/logs/
+    remote_base_log_folder: s3://poc-obs-lixinlong/airflow/logs/
     remote_log_conn_id: obs
 images:
   airflow:
