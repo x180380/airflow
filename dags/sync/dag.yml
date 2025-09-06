@@ -48,4 +48,4 @@ sync:
       operator: airflow.providers.opensearch.operators.opensearch.OpenSearchCreateIndexOperator
       opensearch_conn_id: "opensearch"
       index_name: "test-index"
-      settings: '{"settings": {"index": {"number_of_shards": 1}}}'
+      index_body: '{"settings": {"index": {"number_of_shards": 1}}}'
