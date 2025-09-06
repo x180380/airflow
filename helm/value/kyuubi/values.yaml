@@ -22,7 +22,7 @@ sparkConf:
         spark.kubernetes.driver.pod.name=spark-driver
         spark.kubernetes.executor.podNamePrefix=spark-sql
         spark.executor.instances=1
-        spark.executor.memory=512m
+        spark.executor.memory=2g
         spark.driver.memory=512m
         spark.executor.cores=1
         spark.sql.extensions=org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,org.projectnessie.spark.extensions.NessieSparkSessionExtensions
